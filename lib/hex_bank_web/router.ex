@@ -7,6 +7,8 @@ defmodule HexBankWeb.Router do
 
   scope "/api", HexBankWeb do
     pipe_through :api
+
+    resources "/users", UserController, only: [:create, :update, :delete, :show]
   end
 
   # Enable LiveDashboard in development
