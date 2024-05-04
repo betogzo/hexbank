@@ -14,4 +14,11 @@ defmodule HexBankWeb.UsersController do
     |> put_status(:created)
     |> render(:create, user: user)
   end
+
+  defp handle_response({:error, changeset}, conn) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(json: HexBankWeb.ErrorJSON)
+    |> render(:error, changeset: changeset)
+  end
 end
