@@ -26,6 +26,7 @@ defmodule HexBank.Users.User do
     |> validate_length(:name, min: 3)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:cep, is: 8)
+    |> unique_constraint(:email, name: :unique_users_email)
     |> add_password_hash()
   end
 
