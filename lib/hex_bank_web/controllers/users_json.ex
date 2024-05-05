@@ -8,6 +8,13 @@ defmodule HexBankWeb.UsersJSON do
     }
   end
 
+  def get(%{user: user}) do
+    %{
+      status: "ok",
+      data: data(user)
+    }
+  end
+
   defp data(%User{} = user) do
     %{
       id: user.id,
