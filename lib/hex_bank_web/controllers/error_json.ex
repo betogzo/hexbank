@@ -22,15 +22,23 @@ defmodule HexBankWeb.ErrorJSON do
     }
   end
 
+  def error(%{status: :not_found}) do
+    %{
+      message: "error",
+      errors: "User not found!"
+    }
+  end
+
   def error(%{changeset: changeset}) do
     %{
       message: "error",
-      errors:
-        Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
-          Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
-            opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
-          end)
-        end)
+      errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
     }
+  end
+
+  defp translate_error({msg, opts}) do
+    Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+      opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+    end)
   end
 end
