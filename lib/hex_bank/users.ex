@@ -3,4 +3,6 @@ defmodule HexBank.Users do
 
   # HexBank.Users.create will actually call the function HexBank.Users.Create.call
   defdelegate create(params), to: HexBank.Users.Create, as: :call
+
+  defdelegate get(id), to: HexBank.Users.Get, as: :call
 end
