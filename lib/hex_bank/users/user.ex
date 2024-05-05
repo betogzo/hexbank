@@ -6,6 +6,8 @@ defmodule HexBank.Users.User do
 
   @required_params [:name, :password, :email, :cep]
 
+  #derive behavior when encoding to json, to show only id, name and email fields
+  @derive {Jason.Encoder, only: [:id, :name, :email]}
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
