@@ -23,6 +23,10 @@ defmodule HexBankWeb.UsersJSON do
     }
   end
 
+  def delete(%{}) do
+    %{}
+  end
+
   # commented, since @derive Jason.Encoder on user schema
   # will be responsible for what properties will be shown
   # when user data is encoded to JSON
