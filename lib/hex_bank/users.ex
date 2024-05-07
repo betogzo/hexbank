@@ -5,4 +5,6 @@ defmodule HexBank.Users do
   defdelegate create(params), to: HexBank.Users.Create, as: :call
 
   defdelegate get(id), to: HexBank.Users.Get, as: :call
+
+  defdelegate update(params), to: HexBank.Users.Update, as: :call
 end
