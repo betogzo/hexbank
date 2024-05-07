@@ -4,9 +4,10 @@ defmodule HexBank.Users.User do
 
   alias Ecto.Changeset
 
-  @required_params [:name, :password, :email, :cep]
+  @required_params_create [:name, :password, :email, :cep]
+  @required_params_update [:name, :email, :cep]
 
-  #derive behavior when encoding to json, to show only id, name and email fields
+  # derive behavior when encoding to json, to show only id, name and email fields
   @derive {Jason.Encoder, only: [:id, :name, :email]}
   schema "users" do
     field :name, :string
@@ -18,18 +19,27 @@ defmodule HexBank.Users.User do
     timestamps()
   end
 
-  # thats how ecto will communicate to the database
-  # what it will change and what will be changed as function params
-  # changeset can be used to both insertion and updating
-  def changeset(user \\ %__MODULE__{}, params) do # %__MODULE__{} == an empty map of HexBank.Users.User
+  def changeset(params) do
+    %__MODULE__{}
+    |> cast(params, @required_params_create)
+    |> do_validations(@required_params_create)
+    |> add_password_hash()
+  end
+
+  def changeset(user, params) do
     user
-    |> cast(params, @required_params) # mapping what will be updated to what the app expects
-    |> validate_required(@required_params) # fields that are required, that can't be null
+    |> cast(params, @required_params_create)
+    |> do_validations(@required_params_update)
+    |> add_password_hash()
+  end
+
+  defp do_validations(changeset, fields) do
+    changeset
+    |> validate_required(fields)
     |> validate_length(:name, min: 3)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:cep, is: 8)
     |> unique_constraint(:email, name: :unique_users_email)
-    |> add_password_hash()
   end
 
   # receives a valid changeset with a changed password
