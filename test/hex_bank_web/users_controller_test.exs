@@ -7,10 +7,10 @@ defmodule HexBankWeb.UsersControllerTest do
   describe "create/2" do
     test "successfully creates an user", %{conn: conn} do
       params = %{
-        name: "Beto",
-        cep: "12345678",
-        password: "12345",
-        email: "teste@email.com"
+        "name" => "Beto",
+        "cep" => "87300005",
+        "password" => "12345",
+        "email" => "teste@email.com"
       }
 
       response =
@@ -27,7 +27,7 @@ defmodule HexBankWeb.UsersControllerTest do
     test "returns an error when invalid params are provided", %{conn: conn} do
       params = %{
         name: nil,
-        cep: "12",
+        cep: "87300005",
         password: "12345",
         email: "teste@email.com"
       }
@@ -47,10 +47,10 @@ defmodule HexBankWeb.UsersControllerTest do
   describe "delete/2" do
     test "successfully deletes an user when a valid id is provided", %{conn: conn} do
       params = %{
-        name: "Beto",
-        cep: "12345678",
-        password: "12345",
-        email: "teste@email.com"
+        "name" => "Beto",
+        "cep" => "87300005",
+        "password" => "12345",
+        "email" => "teste@email.com"
       }
 
       {:ok, %User{id: id}} = Users.create(params)
