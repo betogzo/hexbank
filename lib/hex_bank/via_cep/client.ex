@@ -1,4 +1,4 @@
-defmodule HexBankWeb.ViaCep.Client do
+defmodule HexBank.ViaCep.Client do
   use Tesla
 
   plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"
