@@ -1,13 +1,18 @@
 defmodule HexBank.ViaCep.Client do
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"
+  alias HexBank.ViaCep.ClientBehaviour
+
+  @default_url "https://viacep.com.br/ws"
 
   # will convert response data to json if possible
   plug Tesla.Middleware.JSON
 
-  def call(cep) do
-    "/#{cep}/json"
+  @behaviour ClientBehaviour
+
+  @impl ClientBehaviour # stating that this function implements the behaviour "ClientBehaviour"
+  def call(url \\ @default_url, cep) do
+    "#{url}/#{cep}/json"
     |> get()
     |> handle_response()
   end
