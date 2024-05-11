@@ -25,7 +25,13 @@ defmodule HexBankWeb.ErrorJSON do
   def error(%{status: :not_found}) do
     %{
       message: "error",
-      errors: "User not found!"
+      errors: "Resource not found!"
+    }
+  end
+
+  def error(%{status: status}) do
+    %{
+      status: status
     }
   end
 
