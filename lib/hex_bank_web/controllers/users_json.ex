@@ -23,6 +23,13 @@ defmodule HexBankWeb.UsersJSON do
     }
   end
 
+  def login(%{bearer: token}) do
+    %{
+      status: "ok",
+      bearer: token
+    }
+  end
+
   def delete(%{}) do
     %{}
   end

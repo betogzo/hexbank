@@ -4,6 +4,7 @@ defmodule HexBankWeb.UsersController do
   alias HexBank.Users
   alias Users.User
   alias HexBankWeb.FallbackController
+  alias HexBankWeb.Token
 
   action_fallback FallbackController
 
@@ -30,6 +31,16 @@ defmodule HexBankWeb.UsersController do
       conn
       |> put_status(:ok)
       |> render(:update, user: user)
+    end
+  end
+
+  def login(conn, params) do
+    with {:ok, %User{} = user} <- Users.login(params) do
+      token = Token.sign(user)
+
+      conn
+      |> put_status(:ok)
+      |> render(:login, bearer: token)
     end
   end
 
