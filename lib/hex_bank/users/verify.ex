@@ -10,8 +10,8 @@ defmodule HexBank.Users.Verify do
 
   defp verify(user, password) do
     case Argon2.verify_pass(password, user.password_hash) do
-      true -> {:ok, :valid_password}
-      false -> {:ok, :unauthorized}
+      true -> {:ok, user}
+      false -> {:error, :unauthorized}
     end
   end
 end
