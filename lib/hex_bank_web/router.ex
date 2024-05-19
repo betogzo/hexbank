@@ -5,11 +5,21 @@ defmodule HexBankWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug HexBankWeb.Plugs.Auth
+  end
+
   scope "/api", HexBankWeb do
     pipe_through :api
 
-    resources "/users", UsersController, only: [:create, :update, :delete, :show]
+    resources "/users", UsersController, only: [:create]
     post "/users/login", UsersController, :login
+  end
+
+  scope "/api", HexBankWeb do
+    pipe_through [:api, :auth]
+
+    resources "/users", UsersController, only: [:update, :delete, :show]
 
     post "/accounts", AccountsController, :create
     post "/accounts/transaction", AccountsController, :transaction
